@@ -115,6 +115,7 @@ public class GUI extends Application {
                     ObjectInputStream ois = new ObjectInputStream(fis);
                 )
             {
+                @SuppressWarnings("unchecked")
                 ArrayList<Data> datasets = (ArrayList<Data>) ois.readObject();
                 for (Data d : datasets) { cp.addDataSet(d); }
             }
