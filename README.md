@@ -1,6 +1,8 @@
 # Sorting-Algorithms-Visualisation
 An attempt at a configurable visualisation for sorting algorithms.
 
+Note: entry point should be the class algovisual.GUI
+
 ## Usage
 1. Click the "New Dataset" button to create a dataset to be sorted
 2. Select Dataset generating parameters, then click "Done". A new DataSet icon should appear on the left side of the main window
