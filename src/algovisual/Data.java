@@ -17,10 +17,11 @@ import javafx.scene.Node;
 
 final class Data implements Serializable {
     private static final long serialVersionUID = 1L;
-    
     private static final Logger LOGGER = Logger.getLogger("algovisual.Data");
+    private static final String DEF_NAME = "DataSet";
+    
     public boolean report = false;
-    private final String name;
+    private String name;
     private SortingAlgorithm algorithm;
     private final static LongProperty COST_MULTIPLIER = new SimpleLongProperty(100);
     private final static DoubleProperty SWAP_COST = new SimpleDoubleProperty(3), COMPARE_COST = new SimpleDoubleProperty(1), COPY_COST = new SimpleDoubleProperty(1);
@@ -33,11 +34,11 @@ final class Data implements Serializable {
     
     private Data(int length, String name) {
         arr = new int[length];
-        this.name = (name == null) ? "" : name;
+        this.name = (name == null) ? DEF_NAME : name;
     }
     
     private Data(int length) {
-        this(length, null);
+        this(length, DEF_NAME);
     }
     
     /**
@@ -65,7 +66,6 @@ final class Data implements Serializable {
         Data d = new Data(arr.length);
         if (algofunc != null) d.setAlgo(algofunc.apply(d));
         for (int i = 0; i < arr.length; i++) d.set(i, arr[i]);
-        d.getTemp(); // ensure temp storage is initialized
         return d;
     }
     
@@ -91,6 +91,9 @@ final class Data implements Serializable {
     static Data makeDataFrom(Data d, SortingAlgorithm.Catalog algoType) {
         return makeDataFrom(d.arr, algoType.algoConstructor() );
     }
+    
+    String getName() { return name; }
+    void setName(String newName) { this.name = newName; }
     
     public static void setSwapCost(long cost)       { if (cost >= 0) SWAP_COST.setValue(cost);         }
     public static void setCompareCost(long cost)    { if (cost >= 0) COMPARE_COST.setValue(cost);      }

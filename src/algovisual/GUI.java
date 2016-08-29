@@ -18,6 +18,8 @@ import java.util.Iterator;
 import javafx.application.Application;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -34,6 +36,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory.IntegerSpinnerValueFactory;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -298,7 +301,7 @@ class DataListItem extends Canvas {
         gc.setFill(Color.WHITE);
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setTextBaseline(VPos.CENTER);
-        gc.fillText("DataSet", this.getWidth()/2, this.getHeight()/2, this.getWidth()-20);
+        gc.fillText(data.getName(), this.getWidth()/2, this.getHeight()/2, this.getWidth()-20);
     }
     
     private void trackStage(MouseEvent evt) {
@@ -333,6 +336,7 @@ class DataConfigPane extends BorderPane {
     private Data data;
     private final AlgoBarCanvas canvas;
     private final IntegerProperty length, lowerBound, upperBound;
+    private final StringProperty name;
     private Distribution distr;
     private Order order;
     
@@ -380,6 +384,7 @@ class DataConfigPane extends BorderPane {
         length = new SimpleIntegerProperty(DATA_DEFAULT_SIZE);
         lowerBound = new SimpleIntegerProperty(DATA_DEFAULT_MIN);
         upperBound = new SimpleIntegerProperty(DATA_DEFAULT_MAX);
+        name = new SimpleStringProperty();
         
         VBox left = new VBox();
         
@@ -428,32 +433,50 @@ class DataConfigPane extends BorderPane {
     private GridPane makeDataBasicConfigPane() {
         GridPane pane = new GridPane();
 
+        int row = 0;
+        
         Label l;
         Spinner<Integer> sp;
+        TextField tf;
+        
+        l = new Label("Name:");
+        tf = new TextField();
+        name.bind(tf.textProperty());
+        pane.add( l, 0, row);
+        pane.add(tf, 1, row++);
         
         l = new Label("Data Length:");
         sp = new Spinner<>(DATA_MIN_SIZE, DATA_MAX_SIZE, DATA_DEFAULT_SIZE, DATA_STEP_SIZE);
         sp.setMaxWidth(80);
         sp.setEditable(true);
+        sp.valueProperty().addListener( spinner -> {
+            updateData();
+        } );
         length.bind(sp.valueProperty());
-        pane.add( l, 0, 0);
-        pane.add(sp, 1, 0);
+        pane.add( l, 0, row);
+        pane.add(sp, 1, row++);
         
         l = new Label("Lower Limit:");
         Spinner<Integer> lowerBoundSpinner = new Spinner<>(DATA_MIN, DATA_MAX, DATA_DEFAULT_MIN);
         lowerBoundSpinner.setMaxWidth(80);
         lowerBoundSpinner.setEditable(true);
+        lowerBoundSpinner.valueProperty().addListener( spinner -> {
+            updateData();
+        } );
         lowerBound.bind(lowerBoundSpinner.valueProperty());
-        pane.add(                l, 0, 1);
-        pane.add(lowerBoundSpinner, 1, 1);
+        pane.add(                l, 0, row);
+        pane.add(lowerBoundSpinner, 1, row++);
         
         l = new Label("Upper Limit:");
         Spinner<Integer> upperBoundSpinner = new Spinner<>(DATA_MIN, DATA_MAX, DATA_DEFAULT_MAX);
         upperBoundSpinner.setMaxWidth(80);
         upperBoundSpinner.setEditable(true);
+        upperBoundSpinner.valueProperty().addListener( spinner -> {
+            updateData();
+        } );
         upperBound.bind(upperBoundSpinner.valueProperty());
-        pane.add(                l, 0, 2);
-        pane.add(upperBoundSpinner, 1, 2);
+        pane.add(                l, 0, row);
+        pane.add(upperBoundSpinner, 1, row++);
         
         IntegerSpinnerValueFactory lowerBoundValueFactory = (IntegerSpinnerValueFactory)lowerBoundSpinner.valueFactoryProperty().get();
         IntegerSpinnerValueFactory upperBoundValueFactory = (IntegerSpinnerValueFactory)upperBoundSpinner.valueFactoryProperty().get();
@@ -550,6 +573,7 @@ class DataConfigPane extends BorderPane {
         }
         
         data = Data.makeDataFrom(arr, null);
+        data.setName(name.get());
         canvas.setData(data);
         //System.out.println(data);
     }
