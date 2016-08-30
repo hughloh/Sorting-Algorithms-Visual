@@ -67,8 +67,13 @@ public class AlgosWindow extends Stage {
     }
     
     void startAll() {
-        System.out.println("AlgosWindow.startAll() called");
         threads.forEach( thread -> thread.start() );
     }
     
+    void endAll() {
+        threads.forEach( t -> { 
+            System.out.println("Stopping Thread");
+            if (t.isAlive()) t.interrupt(); 
+        } );
+    }
 }

@@ -34,7 +34,7 @@ final class Data implements Serializable {
     
     private Data(int length, String name) {
         arr = new int[length];
-        this.name = (name == null) ? DEF_NAME : name;
+        this.name = (name == null || name == "") ? DEF_NAME : name;
     }
     
     private Data(int length) {
@@ -93,7 +93,7 @@ final class Data implements Serializable {
     }
     
     String getName() { return name; }
-    void setName(String newName) { this.name = newName; }
+    void setName(String newName) { this.name = (newName == null || newName.equalsIgnoreCase("")) ? DEF_NAME : newName; }
     
     public static void setSwapCost(long cost)       { if (cost >= 0) SWAP_COST.setValue(cost);         }
     public static void setCompareCost(long cost)    { if (cost >= 0) COMPARE_COST.setValue(cost);      }
