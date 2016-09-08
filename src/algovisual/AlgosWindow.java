@@ -55,6 +55,11 @@ public class AlgosWindow extends Stage {
             }
         } );
         
+        this.setOnCloseRequest( winEvent -> {
+            endAll();
+            dataSets.clear();
+        } );
+        
         this.setScene(new Scene(mainPane));
         
         this.initModality(Modality.NONE);
@@ -75,5 +80,6 @@ public class AlgosWindow extends Stage {
             System.out.println("Stopping Thread");
             if (t.isAlive()) t.interrupt(); 
         } );
+        threads.clear();
     }
 }

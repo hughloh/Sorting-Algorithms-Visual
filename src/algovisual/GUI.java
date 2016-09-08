@@ -95,7 +95,7 @@ public class GUI extends Application {
         algosWindow.add(Data.makeDataFrom(d, algo));
         algosWindow.sizeToScene();
         
-        algosWindow.setOnCloseRequest( event -> algosWindow.endAll() );
+//        algosWindow.setOnCloseRequest( event -> algosWindow.endAll() );
         
         algosWindow.show();
     }
