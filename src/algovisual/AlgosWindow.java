@@ -17,7 +17,7 @@ import javafx.stage.Window;
 
 /**
  *
- * @author meng
+ * @author hugh
  */
 public class AlgosWindow extends Stage {
     private final ObservableList<Data> dataSets = FXCollections.checkedObservableList(FXCollections.observableArrayList(), Data.class);

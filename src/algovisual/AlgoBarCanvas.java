@@ -14,7 +14,7 @@ import javafx.scene.text.FontWeight;
 
 /**
  *
- * @author meng
+ * @author hugh
  */
 public class AlgoBarCanvas extends Canvas {
     private static final Color DEF_BAR_COLOUR = Color.CORNFLOWERBLUE, DEF_BG = Color.BLACK;

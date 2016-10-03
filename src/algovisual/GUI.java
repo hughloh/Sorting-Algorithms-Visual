@@ -54,7 +54,7 @@ import javafx.stage.Window;
 
 /**
  *
- * @author meng
+ * @author hugh
  */
 public class GUI extends Application {
     private AlgosWindow algosWindow;

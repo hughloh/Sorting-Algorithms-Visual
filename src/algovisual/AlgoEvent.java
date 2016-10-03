@@ -10,7 +10,7 @@ import javafx.event.EventType;
 
 /**
  *
- * @author meng
+ * @author hugh
  */
 public class AlgoEvent extends Event {
     

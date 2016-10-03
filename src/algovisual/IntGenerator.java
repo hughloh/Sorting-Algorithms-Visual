@@ -9,7 +9,7 @@ import java.util.Random;
 
 /**
  *
- * @author meng
+ * @author hugh
  */
 class IntGenerator {
     private static final Random R = new Random(System.currentTimeMillis());
